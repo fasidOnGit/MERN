@@ -1,17 +1,24 @@
 {
-  "name": "MERN",
+  "name": "mern",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon --exec babel-node server.js --ignore public/",
+    "dev": "webpack -wd",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.17.1",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "json-loader": "^0.5.7",
     "mongodb": "^3.0.1",
+    "node-sass-middleware": "^0.11.0",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
