@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ContestPreview from './ContestPreview';
-const ContestList = ({contest , onContestClick}) => {    console.info("yes" , contest);
+const ContestList = ({contest , onContestClick}) => { 
 	return (
 		<div className="ContestList">
 			{Object.keys(contest).map(eachId => 

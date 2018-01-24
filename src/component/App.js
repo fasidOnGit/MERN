@@ -35,10 +35,10 @@ class App extends Component {
 
 		api.fetchContest(contestId).then(contest => {
 			this.setState({
-				currentContestId: contest.id,
+				currentContestId: contest._id,
 				contests : {
 					...this.state.contests,
-					[contest.id]:contest
+					[contest._id]:contest
 				}
 			});
 		});
@@ -60,6 +60,20 @@ class App extends Component {
 
 
 	};
+	addName = (newName, contestId) => {
+		api.addName(newName , contestId).then(resp => {
+			this.setState({
+				contests : {
+					...this.state.contests,
+					[resp.updatedContest._id] : resp.updatedContest,
+					names: {
+						...this.state.names,
+						[resp.newName_id]: resp.newName
+					}
+				}
+			})
+		}).catch(console.error);
+	}
 	currentContent(){
 		return this.state.contests[this.state.currentContestId];
 	}
@@ -70,10 +84,28 @@ class App extends Component {
 		}
 		return 'Naming Contest';
 	}
+	fetchNames = (nameIds) => {
+		if(nameIds.length == 0) {
+			return;
+		}
+		api.fetchNames(nameIds).then(names => {
+			this.setState({
+				names
+			})
+		})
+	}
+	lookupName = (nameId) =>{
+		console.log(this.state)
+		if(!this.state.names || !this.state.names[nameId]) return {name: '...'};
+		return this.state.names[nameId]
+	}
 	currentContest() {
 		if(this.state.currentContestId){
 			return <Contest 
+				fetchNames = {this.fetchNames} 
 				contestListClick={this.fetchContestList}
+				lookupName={this.lookupName}
+				addName = {this.addName}
 				{...this.currentContent()}/>;
 		}
 		return <ContestList 

@@ -1,10 +1,11 @@
 import config from './config';
 import express from 'express';
 import apiRouter from './api';
-import util from 'util';
+import util, { error } from 'util';
 import sassMiddleware from 'node-sass-middleware';
 import path from 'path';
 import serverRender from  './serverRender';
+import bodyParser from 'body-parser';
 const app = express();
 
 app.use(sassMiddleware({
@@ -13,7 +14,7 @@ app.use(sassMiddleware({
 }));
 
 app.set('view engine' , 'ejs');
-
+app.use(bodyParser.json());
 app.get(['/' , '/contest/:contestId'], (req , res) => {
 	serverRender(req.params.contestId)
 		.then(({initialMarkup , initialData}) => {
